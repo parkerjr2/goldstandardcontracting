@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gsc-bg: #0f1720;
+  --gsc-surface: #141f2a;
+  --gsc-text: #e8eef5;
+  --gsc-muted: #a8b3c2;
+  --gsc-gold: #d4af37;
+  --gsc-gold-dark: #b8892b;
+  --gsc-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-gsc-bg text-gsc-text font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, var(--gsc-gold) 0%, var(--gsc-gold-dark) 100%);
+  }
+
+  .glass-effect {
+    background: rgba(20, 31, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--gsc-border);
+  }
+}
