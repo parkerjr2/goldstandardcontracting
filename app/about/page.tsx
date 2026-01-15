@@ -75,7 +75,7 @@ export default function AboutPage() {
             <Button href="/contact" variant="primary" size="lg">
               Get a Free Estimate
             </Button>
-            <Button href="tel:+14052781984" variant="outline" size="lg">
+            <Button href="tel:+14052781994" variant="outline" size="lg">
               Call {BUSINESS_INFO.phone}
             </Button>
           </div>

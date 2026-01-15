@@ -5,7 +5,7 @@ A premium, SEO-optimized Next.js website for Gold Standard Contracting - a licen
 ## Project Overview
 
 - **Business**: Gold Standard Contracting
-- **Phone**: (405) 278-1984
+- **Phone**: (405) 278-1994
 - **Email**: Goldstandardcontracts@gmail.com
 - **License**: Oklahoma CIB #0007026
 - **Service Areas**: Norman, Yukon, Tuttle, Moore, Mustang, El Reno, Bethany, Del City, Minco, Edmond (OK)
@@ -273,7 +273,7 @@ CONTACT_EMAIL=Goldstandardcontracts@gmail.com
 
 For technical support or questions about this website:
 - Email: Goldstandardcontracts@gmail.com
-- Phone: (405) 278-1984
+- Phone: (405) 278-1994
 
 ## License
 

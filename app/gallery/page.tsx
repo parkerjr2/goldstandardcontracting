@@ -1,78 +1,20 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-
-export const metadata: Metadata = {
-  title: "Project Gallery | Gold Standard Contracting",
-  description:
-    "View our completed roofing, siding, window, and remodeling projects in Norman and the OKC metro area.",
-};
-
-const galleryImages = [
-  {
-    url: "https://images.unsplash.com/photo-1632778742584-dbac5e718e06?w=800&q=80",
-    alt: "Professional roof installation in progress",
-    category: "Roofing",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80",
-    alt: "Completed residential roofing project",
-    category: "Roofing",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
-    alt: "New shingle roof installation",
-    category: "Roofing",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
-    alt: "Modern home exterior with new siding",
-    category: "Exterior",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
-    alt: "Beautiful home with updated exterior",
-    category: "Exterior",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
-    alt: "Quality home construction and improvement",
-    category: "Exterior",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80",
-    alt: "Roofer working on residential roof",
-    category: "Roofing",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=800&q=80",
-    alt: "Professional roofing contractor at work",
-    category: "Roofing",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80",
-    alt: "Modern residential property",
-    category: "Exterior",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80",
-    alt: "Home improvement and renovation",
-    category: "Remodeling",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=800&q=80",
-    alt: "Interior remodeling project",
-    category: "Remodeling",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800&q=80",
-    alt: "Quality construction work",
-    category: "Remodeling",
-  },
-];
+import { GALLERY_IMAGES } from "@/lib/gallery";
 
 export default function GalleryPage() {
+  const [activeFilter, setActiveFilter] = useState<string>("All");
+
+  const categories = ["All", "Roofing", "Exterior", "Remodeling"];
+
+  const filteredImages = activeFilter === "All"
+    ? GALLERY_IMAGES
+    : GALLERY_IMAGES.filter((img) => img.category === activeFilter);
+
   return (
     <>
       <Section className="bg-gradient-to-br from-gsc-bg via-gsc-surface to-gsc-bg">
@@ -87,8 +29,26 @@ export default function GalleryPage() {
       </Section>
 
       <Section className="bg-gsc-bg">
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveFilter(category)}
+              className={`px-6 py-2 rounded-full font-semibold transition-all duration-200 ${
+                activeFilter === category
+                  ? "bg-gsc-gold text-gsc-bg"
+                  : "bg-gsc-surface text-gsc-muted border border-gsc-border hover:border-gsc-gold"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Image Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {galleryImages.map((image, index) => (
+          {filteredImages.map((image, index) => (
             <div
               key={index}
               className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-gsc-border hover:border-gsc-gold transition-all duration-300"

@@ -144,7 +144,7 @@ Visit production URL and verify:
 2. Add business information:
    - Name: Gold Standard Contracting
    - Category: Roofing Contractor
-   - Phone: (405) 278-1984
+   - Phone: (405) 278-1994
    - Website: https://goldstandardcontracting.com
    - Service Areas: Norman, Yukon, Moore, etc.
 3. Add photos (logo, projects, team)

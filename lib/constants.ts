@@ -70,26 +70,26 @@ export const SERVICES = [
   {
     name: "Roofing",
     slug: "roofing",
-    icon: "🏠",
+    icon: "",
     shortDescription: "Expert roof repair, replacement, and storm damage restoration.",
     isPrimary: true,
   },
   {
     name: "Siding",
     slug: "siding",
-    icon: "🏗️",
+    icon: "",
     shortDescription: "Professional siding installation, replacement, and repair services.",
   },
   {
     name: "Windows",
     slug: "windows",
-    icon: "🪟",
+    icon: "",
     shortDescription: "Energy-efficient window replacement and installation.",
   },
   {
     name: "Remodeling",
     slug: "remodeling",
-    icon: "🔨",
+    icon: "",
     shortDescription: "Complete bathroom remodels, flooring, and general construction.",
   },
 ];

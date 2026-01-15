@@ -5,14 +5,12 @@ import { SERVICE_ICONS } from "./ui/Icons";
 interface ServiceCardProps {
   name: string;
   slug: string;
-  icon: string;
   shortDescription: string;
 }
 
 export function ServiceCard({
   name,
   slug,
-  icon,
   shortDescription,
 }: ServiceCardProps) {
   const IconComponent = SERVICE_ICONS[slug];
@@ -22,13 +20,9 @@ export function ServiceCard({
       <Card className="h-full hover:border-gsc-gold transition-all duration-300 transform hover:-translate-y-1">
         <div className="text-center">
           <div className="mb-4 flex justify-center">
-            {IconComponent ? (
-              <div className="text-gsc-gold group-hover:scale-110 transition-transform duration-300">
-                <IconComponent className="w-16 h-16" />
-              </div>
-            ) : (
-              <div className="text-6xl">{icon}</div>
-            )}
+            <div className="text-gsc-gold group-hover:scale-110 transition-transform duration-300">
+              <IconComponent className="w-16 h-16" />
+            </div>
           </div>
           <h3 className="text-2xl font-bold mb-3 text-gsc-text group-hover:text-gsc-gold transition-colors duration-200">
             {name}
