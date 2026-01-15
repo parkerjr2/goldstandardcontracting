@@ -1,11 +1,11 @@
 export const GALLERY_IMAGES = [
   {
-    url: "https://images.unsplash.com/photo-1632778742584-dbac5e718e06?w=800&q=80",
+    url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80",
     alt: "Professional roof installation in progress",
     category: "Roofing",
   },
   {
-    url: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80",
+    url: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80",
     alt: "Completed residential roofing project",
     category: "Roofing",
   },

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Gold Standard Contracting",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1632778742584-dbac5e718e06?w=1200&h=630&q=80&fit=crop",
+        url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=630&q=80&fit=crop",
         width: 1200,
         height: 630,
         alt: "Professional roofing contractor working on residential roof installation",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Roofing Contractor in Norman, OK | Gold Standard Contracting",
     description:
       "Gold Standard Contracting is a licensed roofing contractor serving Norman and the OKC metro. Roof repair, replacement, and storm damage help.",
-    images: ["https://images.unsplash.com/photo-1632778742584-dbac5e718e06?w=1200&h=630&q=80&fit=crop"],
+    images: ["https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=630&q=80&fit=crop"],
   },
 };
 
@@ -98,7 +98,7 @@ export default function HomePage() {
           {/* Right Column - Hero Image */}
           <div className="relative h-[400px] lg:h-[600px] rounded-lg overflow-hidden shadow-2xl">
             <Image
-              src="https://images.unsplash.com/photo-1632778742584-dbac5e718e06?w=1200&q=80"
+              src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80"
               alt="Professional roofing contractor working on residential roof installation"
               fill
               priority
@@ -143,7 +143,7 @@ export default function HomePage() {
             {/* Left: Supporting Image */}
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80"
+                src="https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80"
                 alt="Completed residential roofing project"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -274,11 +274,11 @@ export default function HomePage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
             {
-              url: "https://images.unsplash.com/photo-1632778742584-dbac5e718e06?w=600&q=80",
+              url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80",
               alt: "Professional roof installation",
             },
             {
-              url: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80",
+              url: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80",
               alt: "Completed roofing project",
             },
             {
