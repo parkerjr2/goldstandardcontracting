@@ -1,8 +1,8 @@
 // Business contact information
 export const BUSINESS_INFO = {
   name: "Gold Standard Contracting",
-  phone: "(405) 278-1984",
-  phoneRaw: "4052781984",
+  phone: "(405) 278-1994",
+  phoneRaw: "4052781994",
   email: "Goldstandardcontracts@gmail.com",
   license: "Oklahoma CIB #0007026",
   tagline: "From concept to completion, we work closely with you every step of the way to ensure that your home exceeds your expectations.",

@@ -7,11 +7,7 @@ export function generateLocalBusinessSchema() {
     name: BUSINESS_INFO.name,
     telephone: BUSINESS_INFO.phone,
     email: BUSINESS_INFO.email,
-    areaServed: CITIES.map((city) => ({
-      "@type": "City",
-      name: city.name,
-      addressRegion: city.state,
-    })),
+    areaServed: CITIES.map((city) => `${city.name}, ${city.state}`),
     sameAs: [SOCIAL_LINKS.facebook.url, SOCIAL_LINKS.yelp.url],
   };
 }
@@ -27,11 +23,7 @@ export function generateServiceSchema(serviceName: string, description: string) 
       name: BUSINESS_INFO.name,
       telephone: BUSINESS_INFO.phone,
     },
-    areaServed: CITIES.map((city) => ({
-      "@type": "City",
-      name: city.name,
-      addressRegion: city.state,
-    })),
+    areaServed: CITIES.map((city) => `${city.name}, ${city.state}`),
   };
 }
 

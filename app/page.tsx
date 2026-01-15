@@ -40,7 +40,7 @@ export default function HomePage() {
             Roofing Contractor in Norman & OKC Metro
           </h1>
           <p className="text-xl md:text-2xl text-gsc-muted mb-8 leading-relaxed">
-            {BUSINESS_INFO.tagline}
+            From roof repairs and roof replacements to storm damage inspections, Gold Standard Contracting helps homeowners across Norman and the OKC metro protect their homes with quality craftsmanship and clear communication.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button href="/contact" variant="primary" size="lg">
@@ -71,6 +71,56 @@ export default function HomePage() {
           {SERVICES.map((service) => (
             <ServiceCard key={service.slug} {...service} />
           ))}
+        </div>
+      </Section>
+
+      {/* Roofing-Focused Section */}
+      <Section className="bg-gsc-surface">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
+              Roof Repair & Roof Replacement in Norman, OK
+            </h2>
+            <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
+              Whether you're dealing with a leaky roof, storm damage, or an aging roof that needs replacement, our team provides honest inspections and quality workmanship. We regularly complete roofing projects in Norman, Yukon, Moore, Mustang, Edmond, and surrounding OKC metro communities.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4">
+              <ul className="space-y-3">
+                {[
+                  "Roof repairs for leaks and damage",
+                  "Full roof replacements",
+                  "Storm damage assessments",
+                  "Honest inspections and recommendations",
+                  "Clean, professional job sites",
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start space-x-3">
+                    <span className="text-gsc-gold text-xl flex-shrink-0">✓</span>
+                    <span className="text-gsc-text text-lg">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-4">
+                <Button href="/services/roofing" variant="primary" size="lg">
+                  Learn About Our Roofing Services
+                </Button>
+              </div>
+            </div>
+            <div className="bg-gsc-bg border border-gsc-border rounded-lg p-6">
+              <h3 className="text-xl font-bold mb-4 text-gsc-text">
+                When to Call a Roofing Contractor
+              </h3>
+              <ul className="space-y-2 text-gsc-muted">
+                <li>• Visible leaks or water stains inside your home</li>
+                <li>• Missing, cracked, or curling shingles</li>
+                <li>• Recent hail or wind storm damage</li>
+                <li>• Your roof is 20+ years old</li>
+                <li>• Granules collecting in gutters</li>
+                <li>• Sagging or uneven roof sections</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -120,9 +170,11 @@ export default function HomePage() {
             Proudly serving Norman, Yukon, Moore, and surrounding communities with expert roofing and exterior services.
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+        <div className="flex flex-wrap justify-center gap-4 mb-8 max-w-5xl mx-auto">
           {primaryCities.map((city) => (
-            <CityCard key={city.slug} {...city} />
+            <div key={city.slug} className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(16.666%-0.833rem)]">
+              <CityCard {...city} />
+            </div>
           ))}
         </div>
         <div className="text-center">

@@ -30,7 +30,7 @@ export function CTABanner({
           href={formatPhoneLink(BUSINESS_INFO.phoneRaw)}
           variant="outline"
           size="lg"
-          className="border-gsc-bg text-gsc-bg hover:bg-gsc-bg hover:text-gsc-gold"
+          className="border-2 border-gsc-bg text-gsc-bg hover:bg-gsc-bg hover:text-gsc-gold font-bold shadow-lg"
         >
           Call {BUSINESS_INFO.phone}
         </Button>
