@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
@@ -9,40 +8,49 @@ import { Testimonial } from "@/components/Testimonial";
 import { CTABanner } from "@/components/CTABanner";
 import { ProcessSteps } from "@/components/ProcessSteps";
 import { TrustBadges } from "@/components/TrustBadges";
-import { SERVICES, CITIES, BUSINESS_INFO } from "@/lib/constants";
+import { CITIES, BUSINESS_INFO } from "@/lib/constants";
 import { formatPhoneLink } from "@/lib/utils";
+import { getHomePage } from "@/lib/sanity";
+import { urlFor } from "@/sanity/lib/image";
 
-export const metadata: Metadata = {
-  title: "Roofing Contractor in Norman, OK | Gold Standard Contracting",
-  description:
-    "Gold Standard Contracting is a licensed roofing contractor serving Norman and the OKC metro. Roof repair, replacement, and storm damage help.",
-  openGraph: {
-    title: "Roofing Contractor in Norman, OK | Gold Standard Contracting",
-    description:
-      "Gold Standard Contracting is a licensed roofing contractor serving Norman and the OKC metro. Roof repair, replacement, and storm damage help.",
-    url: "https://goldstandardcontracting.com",
-    siteName: "Gold Standard Contracting",
-    images: [
-      {
-        url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=630&q=80&fit=crop",
-        width: 1200,
-        height: 630,
-        alt: "Professional roofing contractor working on residential roof installation",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Roofing Contractor in Norman, OK | Gold Standard Contracting",
-    description:
-      "Gold Standard Contracting is a licensed roofing contractor serving Norman and the OKC metro. Roof repair, replacement, and storm damage help.",
-    images: ["https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=630&q=80&fit=crop"],
-  },
-};
+export const revalidate = 3600; // ISR - revalidate every hour
 
-export default function HomePage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const homePage = await getHomePage();
+
+  return {
+    title: homePage.seo.title,
+    description: homePage.seo.description,
+    openGraph: {
+      title: homePage.seo.title,
+      description: homePage.seo.description,
+      url: "https://goldstandardcontracting.com",
+      siteName: "Gold Standard Contracting",
+      images: homePage.seo.ogImage
+        ? [
+            {
+              url: urlFor(homePage.seo.ogImage).width(1200).height(630).url(),
+              width: 1200,
+              height: 630,
+            },
+          ]
+        : [],
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: homePage.seo.title,
+      description: homePage.seo.description,
+      images: homePage.seo.ogImage
+        ? [urlFor(homePage.seo.ogImage).width(1200).height(630).url()]
+        : [],
+    },
+  };
+}
+
+export default async function HomePage() {
+  const homePage = await getHomePage();
   const primaryCities = CITIES.filter((city) => city.isPrimary).slice(0, 6);
 
   return (
@@ -53,53 +61,43 @@ export default function HomePage() {
           {/* Left Column - Text & CTAs */}
           <div className="text-center lg:text-left">
             <div className="inline-block mb-6 px-4 py-2 bg-gsc-gold/20 border border-gsc-gold rounded-full text-sm font-semibold text-gsc-gold">
-              {BUSINESS_INFO.license}
+              {homePage.hero.badge}
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gsc-text leading-tight">
-              Roofing Contractor in Norman & OKC Metro
+              {homePage.hero.headline}
             </h1>
             <p className="text-xl md:text-2xl text-gsc-muted mb-8 leading-relaxed">
-              From roof repairs and roof replacements to storm damage inspections, Gold Standard Contracting helps homeowners across Norman and the OKC metro protect their homes with quality craftsmanship and clear communication.
+              {homePage.hero.subheading}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <Button href="/contact" variant="primary" size="lg">
-                Get a Free Estimate
+              <Button href={homePage.hero.primaryCTA.url} variant="primary" size="lg">
+                {homePage.hero.primaryCTA.text}
               </Button>
               <Button
                 href={formatPhoneLink(BUSINESS_INFO.phoneRaw)}
                 variant="outline"
                 size="lg"
               >
-                Call {BUSINESS_INFO.phone}
+                {homePage.hero.secondaryCTA.text} {BUSINESS_INFO.phone}
               </Button>
             </div>
 
             {/* Trust Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-gsc-border">
-              <div className="text-center lg:text-left">
-                <div className="text-gsc-gold text-2xl font-bold mb-1">Licensed</div>
-                <div className="text-sm text-gsc-muted">CIB #0007026</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-gsc-gold text-2xl font-bold mb-1">Local</div>
-                <div className="text-sm text-gsc-muted">OKC Metro</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-gsc-gold text-2xl font-bold mb-1">Quality</div>
-                <div className="text-sm text-gsc-muted">Craftsmanship</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-gsc-gold text-2xl font-bold mb-1">Clear</div>
-                <div className="text-sm text-gsc-muted">Communication</div>
-              </div>
+              {homePage.hero.trustBar.map((item: { title: string; subtitle: string }, index: number) => (
+                <div key={index} className="text-center lg:text-left">
+                  <div className="text-gsc-gold text-2xl font-bold mb-1">{item.title}</div>
+                  <div className="text-sm text-gsc-muted">{item.subtitle}</div>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Right Column - Hero Image */}
           <div className="relative h-[400px] lg:h-[600px] rounded-lg overflow-hidden shadow-2xl">
             <Image
-              src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80"
-              alt="Professional roofing contractor working on residential roof installation"
+              src={homePage.hero.heroImage?.asset ? urlFor(homePage.hero.heroImage).width(1200).url() : "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80"}
+              alt={homePage.hero.heroImage?.alt || "Professional roofing contractor working on residential roof installation"}
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -113,15 +111,15 @@ export default function HomePage() {
       <Section className="bg-gsc-bg">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-            Professional Roofing Contractor Services
+            {homePage.servicesSection.title}
           </h2>
           <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
-            As a trusted roofing contractor, we offer comprehensive exterior services to protect and enhance your home.
+            {homePage.servicesSection.description}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SERVICES.map((service) => (
-            <ServiceCard key={service.slug} {...service} />
+          {homePage.servicesSection.services.map((service: any) => (
+            <ServiceCard key={service._id} {...service} />
           ))}
         </div>
       </Section>
@@ -131,10 +129,10 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-              Roof Repair & Roof Replacement in Norman, OK
+              {homePage.roofingSection.title}
             </h2>
             <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
-              Whether you're dealing with a leaky roof, storm damage, or an aging roof that needs replacement, our team provides honest inspections and quality workmanship. We regularly complete roofing projects in Norman, Yukon, Moore, Mustang, Edmond, and surrounding OKC metro communities.
+              {homePage.roofingSection.description}
             </p>
           </div>
 
@@ -143,8 +141,8 @@ export default function HomePage() {
             {/* Left: Supporting Image */}
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80"
-                alt="Completed residential roofing project"
+                src={homePage.roofingSection.image?.asset ? urlFor(homePage.roofingSection.image).width(800).url() : "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80"}
+                alt={homePage.roofingSection.image?.alt || "Completed residential roofing project"}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
@@ -154,13 +152,7 @@ export default function HomePage() {
             {/* Right: Bullet List */}
             <div className="space-y-6">
               <ul className="space-y-4">
-                {[
-                  "Roof repairs for leaks and damage",
-                  "Full roof replacements",
-                  "Storm damage assessments",
-                  "Honest inspections and recommendations",
-                  "Clean, professional job sites",
-                ].map((item, index) => (
+                {homePage.roofingSection.bulletPoints.map((item: string, index: number) => (
                   <li key={index} className="flex items-start space-x-3">
                     <span className="text-gsc-gold text-xl flex-shrink-0 mt-1">✓</span>
                     <span className="text-gsc-text text-lg">{item}</span>
@@ -168,8 +160,8 @@ export default function HomePage() {
                 ))}
               </ul>
               <div className="pt-2">
-                <Button href="/services/roofing" variant="primary" size="lg">
-                  Learn About Our Roofing Services
+                <Button href={homePage.roofingSection.cta.url} variant="primary" size="lg">
+                  {homePage.roofingSection.cta.text}
                 </Button>
               </div>
             </div>
@@ -184,16 +176,13 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-gsc-text">
-                When to Call a Roofing Contractor
+                {homePage.roofingSection.whenToCallCard.title}
               </h3>
             </div>
             <ul className="space-y-3 text-gsc-muted ml-12">
-              <li>• Visible leaks or water stains inside your home</li>
-              <li>• Missing, cracked, or curling shingles</li>
-              <li>• Recent hail or wind storm damage</li>
-              <li>• Your roof is 20+ years old</li>
-              <li>• Granules collecting in gutters</li>
-              <li>• Sagging or uneven roof sections</li>
+              {homePage.roofingSection.whenToCallCard.items.map((item: string, index: number) => (
+                <li key={index}>• {item}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -203,76 +192,59 @@ export default function HomePage() {
       <Section className="bg-gsc-surface">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-            Why Choose Gold Standard Contracting
+            {homePage.whyChooseSection.title}
           </h2>
           <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
-            We bring professionalism, quality, and clear communication to every project.
+            {homePage.whyChooseSection.description}
           </p>
         </div>
-        <TrustBadges />
+        <TrustBadges points={homePage.whyChooseSection.trustPoints} />
       </Section>
 
       {/* Process Section */}
       <Section className="bg-gsc-bg">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-            Our Process
+            {homePage.processSection.title}
           </h2>
           <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
-            From your first call to final walkthrough, we make the process straightforward and stress-free.
+            {homePage.processSection.description}
           </p>
         </div>
-        <ProcessSteps />
+        <ProcessSteps steps={homePage.processSection.steps} />
       </Section>
 
       {/* Testimonial Section */}
       <Section className="bg-gsc-surface">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-            What Our Customers Say
+            {homePage.testimonialsSection.title}
           </h2>
         </div>
-        <Testimonial />
+        <Testimonial testimonial={homePage.testimonialsSection.featuredTestimonial} />
       </Section>
 
       {/* Gallery Preview Section */}
       <Section className="bg-gsc-surface">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-            Recent Projects
+            {homePage.gallerySection.title}
           </h2>
           <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
-            See examples of our quality craftsmanship and attention to detail.
+            {homePage.gallerySection.description}
           </p>
         </div>
 
         {/* Gallery Preview Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {[
-            {
-              url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80",
-              alt: "Professional roof installation",
-            },
-            {
-              url: "https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80",
-              alt: "Completed roofing project",
-            },
-            {
-              url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80",
-              alt: "Modern home exterior",
-            },
-            {
-              url: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=600&q=80",
-              alt: "Home remodeling project",
-            },
-          ].map((image, index) => (
+          {(homePage.gallerySection.previewImages || []).map((image: any, index: number) => (
             <div
               key={index}
               className="relative aspect-square overflow-hidden rounded-lg border border-gsc-border hover:border-gsc-gold transition-all duration-300 group"
             >
               <Image
-                src={image.url}
-                alt={image.alt}
+                src={image?.asset ? urlFor(image).width(600).url() : "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80"}
+                alt={image?.alt || "Gallery image"}
                 fill
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -282,8 +254,8 @@ export default function HomePage() {
         </div>
 
         <div className="text-center">
-          <Button href="/gallery" variant="primary" size="lg">
-            View Full Gallery
+          <Button href={homePage.gallerySection.cta.url} variant="primary" size="lg">
+            {homePage.gallerySection.cta.text}
           </Button>
         </div>
       </Section>
@@ -292,10 +264,10 @@ export default function HomePage() {
       <Section className="bg-gsc-bg">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-            Serving the OKC Metro Area
+            {homePage.serviceAreasSection.title}
           </h2>
           <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
-            Proudly serving Norman, Yukon, Moore, and surrounding communities with expert roofing and exterior services.
+            {homePage.serviceAreasSection.description}
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-4 mb-8 max-w-5xl mx-auto">
@@ -306,15 +278,18 @@ export default function HomePage() {
           ))}
         </div>
         <div className="text-center">
-          <Button href="/service-areas" variant="outline" size="lg">
-            View All Service Areas
+          <Button href={homePage.serviceAreasSection.cta.url} variant="outline" size="lg">
+            {homePage.serviceAreasSection.cta.text}
           </Button>
         </div>
       </Section>
 
       {/* CTA Section */}
       <Section className="bg-gsc-surface">
-        <CTABanner />
+        <CTABanner
+          title={homePage.ctaBanner.title}
+          subtitle={homePage.ctaBanner.subtitle}
+        />
       </Section>
     </>
   );

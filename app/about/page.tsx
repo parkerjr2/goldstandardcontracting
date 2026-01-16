@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { TrustBadges } from "@/components/TrustBadges";
-import { BUSINESS_INFO } from "@/lib/constants";
+import { BUSINESS_INFO, TRUST_POINTS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "About Us | Licensed Roofing Contractor",
@@ -59,7 +59,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold mb-8 text-center text-gsc-text">
             Why Choose Us
           </h2>
-          <TrustBadges />
+          <TrustBadges points={TRUST_POINTS.map(text => ({ text }))} />
         </div>
       </Section>
 
