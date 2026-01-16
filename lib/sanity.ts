@@ -57,3 +57,17 @@ export async function getFeaturedGalleryImages(limit = 4) {
 
   return await client.fetch(query, {}, { next: { revalidate: 3600 } });
 }
+
+export async function getAboutPage() {
+  const query = `*[_type == "aboutPage"][0]{
+    seo,
+    hero,
+    whatWeDo,
+    howWeWork,
+    ourCommitment,
+    whyChooseSection,
+    ctaSection
+  }`;
+
+  return await client.fetch(query, {}, { next: { revalidate: 3600 } });
+}

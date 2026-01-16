@@ -27,6 +27,10 @@ async function handleRevalidation(request: NextRequest) {
       pathsToRevalidate.add('/gallery');
     }
 
+    if (contentType === 'aboutPage') {
+      pathsToRevalidate.add('/about');
+    }
+
     // Revalidate all affected paths
     await Promise.all(
       Array.from(pathsToRevalidate).map(path => revalidatePath(path))
