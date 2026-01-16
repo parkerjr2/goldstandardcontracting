@@ -22,7 +22,6 @@ export function CTABanner({
           href="/contact"
           variant="secondary"
           size="lg"
-          className="bg-gsc-bg text-gsc-gold hover:bg-gsc-surface"
         >
           Get a Free Estimate
         </Button>
@@ -30,7 +29,6 @@ export function CTABanner({
           href={formatPhoneLink(BUSINESS_INFO.phoneRaw)}
           variant="outline"
           size="lg"
-          className="border-2 border-gsc-bg text-gsc-bg hover:bg-gsc-bg hover:text-gsc-gold font-bold shadow-lg"
         >
           Call {BUSINESS_INFO.phone}
         </Button>

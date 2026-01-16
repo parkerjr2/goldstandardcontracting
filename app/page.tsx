@@ -235,32 +235,8 @@ export default function HomePage() {
         <Testimonial />
       </Section>
 
-      {/* Service Areas Section */}
-      <Section className="bg-gsc-bg">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
-            Serving the OKC Metro Area
-          </h2>
-          <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
-            Proudly serving Norman, Yukon, Moore, and surrounding communities with expert roofing and exterior services.
-          </p>
-        </div>
-        <div className="flex flex-wrap justify-center gap-4 mb-8 max-w-5xl mx-auto">
-          {primaryCities.map((city) => (
-            <div key={city.slug} className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(16.666%-0.833rem)]">
-              <CityCard {...city} />
-            </div>
-          ))}
-        </div>
-        <div className="text-center">
-          <Button href="/service-areas" variant="outline" size="lg">
-            View All Service Areas
-          </Button>
-        </div>
-      </Section>
-
       {/* Gallery Preview Section */}
-      <Section className="bg-gsc-bg">
+      <Section className="bg-gsc-surface">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
             Recent Projects
@@ -308,6 +284,30 @@ export default function HomePage() {
         <div className="text-center">
           <Button href="/gallery" variant="primary" size="lg">
             View Full Gallery
+          </Button>
+        </div>
+      </Section>
+
+      {/* Service Areas Section */}
+      <Section className="bg-gsc-bg">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gsc-text">
+            Serving the OKC Metro Area
+          </h2>
+          <p className="text-lg text-gsc-muted max-w-3xl mx-auto">
+            Proudly serving Norman, Yukon, Moore, and surrounding communities with expert roofing and exterior services.
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-4 mb-8 max-w-5xl mx-auto">
+          {primaryCities.map((city) => (
+            <div key={city.slug} className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(16.666%-0.833rem)]">
+              <CityCard {...city} />
+            </div>
+          ))}
+        </div>
+        <div className="text-center">
+          <Button href="/service-areas" variant="outline" size="lg">
+            View All Service Areas
           </Button>
         </div>
       </Section>

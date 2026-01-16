@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { CTABanner } from "@/components/CTABanner";
 import { FAQAccordion } from "@/components/ui/FAQAccordion";
 import { CITIES } from "@/lib/constants";
-import { generateServiceSchema } from "@/lib/schema";
+import { generateServiceSchema, generateRoofingServiceSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Roof Repair & Replacement in Norman & OKC Metro",
@@ -53,10 +53,7 @@ const roofingFAQs = [
 
 export default function RoofingPage() {
   const primaryCities = CITIES.filter((city) => city.isPrimary).slice(0, 5);
-  const schema = generateServiceSchema(
-    "Roofing Services",
-    "Professional roof repair, replacement, and storm damage restoration in the OKC metro area."
-  );
+  const schema = generateRoofingServiceSchema();
 
   return (
     <>

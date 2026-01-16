@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Phone, Mail } from "lucide-react";
 import { BUSINESS_INFO, CITIES, SERVICES, SOCIAL_LINKS } from "@/lib/constants";
 import { formatPhoneLink } from "@/lib/utils";
 
@@ -82,7 +83,7 @@ export function Footer() {
                   href={formatPhoneLink(BUSINESS_INFO.phoneRaw)}
                   className="text-gsc-muted hover:text-gsc-gold transition-colors flex items-center space-x-2"
                 >
-                  <span>📞</span>
+                  <Phone className="w-4 h-4 flex-shrink-0" />
                   <span>{BUSINESS_INFO.phone}</span>
                 </a>
               </li>
@@ -91,7 +92,7 @@ export function Footer() {
                   href={`mailto:${BUSINESS_INFO.email}`}
                   className="text-gsc-muted hover:text-gsc-gold transition-colors flex items-center space-x-2"
                 >
-                  <span>📧</span>
+                  <Mail className="w-4 h-4 flex-shrink-0" />
                   <span className="break-all">{BUSINESS_INFO.email}</span>
                 </a>
               </li>
