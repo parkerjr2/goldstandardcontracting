@@ -1,7 +1,7 @@
 import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
+async function handleRevalidation(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
   const path = searchParams.get('path') || '/';
@@ -24,4 +24,12 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function POST(request: NextRequest) {
+  return handleRevalidation(request);
+}
+
+export async function GET(request: NextRequest) {
+  return handleRevalidation(request);
 }
