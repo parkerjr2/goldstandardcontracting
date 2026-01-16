@@ -70,7 +70,7 @@ export default async function HomePage() {
             <p className="text-xl md:text-2xl text-gsc-muted mb-8 leading-relaxed">
               {homePage.hero.subheading}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button href={homePage.hero.primaryCTA.url} variant="primary" size="lg">
                 {homePage.hero.primaryCTA.text}
               </Button>
@@ -81,6 +81,21 @@ export default async function HomePage() {
               >
                 {homePage.hero.secondaryCTA.text} {BUSINESS_INFO.phone}
               </Button>
+            </div>
+
+            {/* Micro-trust text */}
+            <div className="flex items-center justify-center lg:justify-start gap-4 text-sm text-gsc-muted mt-4 mb-8">
+              <span className="flex items-center gap-1">
+                <span className="text-gsc-gold">✓</span> Licensed & Insured
+              </span>
+              <span className="text-gsc-border">·</span>
+              <span className="flex items-center gap-1">
+                <span className="text-gsc-gold">✓</span> Free Estimates
+              </span>
+              <span className="text-gsc-border hidden sm:inline">·</span>
+              <span className="flex items-center gap-1 hidden sm:flex">
+                <span className="text-gsc-gold">✓</span> Serving Norman & OKC
+              </span>
             </div>
 
             {/* Trust Bar */}
