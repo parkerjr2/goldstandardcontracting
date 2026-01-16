@@ -10,7 +10,7 @@ import { ProcessSteps } from "@/components/ProcessSteps";
 import { TrustBadges } from "@/components/TrustBadges";
 import { CITIES, BUSINESS_INFO } from "@/lib/constants";
 import { formatPhoneLink } from "@/lib/utils";
-import { getHomePage } from "@/lib/sanity";
+import { getHomePage, getFeaturedGalleryImages } from "@/lib/sanity";
 import { urlFor } from "@/sanity/lib/image";
 
 export const revalidate = 3600; // ISR - revalidate every hour
@@ -51,6 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const homePage = await getHomePage();
+  const galleryImages = await getFeaturedGalleryImages(4);
   const primaryCities = CITIES.filter((city) => city.isPrimary).slice(0, 6);
 
   return (
@@ -237,20 +238,26 @@ export default async function HomePage() {
 
         {/* Gallery Preview Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {(homePage.gallerySection.previewImages || []).map((image: any, index: number) => (
-            <div
-              key={index}
-              className="relative aspect-square overflow-hidden rounded-lg border border-gsc-border hover:border-gsc-gold transition-all duration-300 group"
-            >
-              <Image
-                src={image?.asset ? urlFor(image).width(600).url() : "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80"}
-                alt={image?.alt || "Gallery image"}
-                fill
-                sizes="(max-width: 1024px) 50vw, 25vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+          {galleryImages.length > 0 ? (
+            galleryImages.map((image: any) => (
+              <div
+                key={image._id}
+                className="relative aspect-square overflow-hidden rounded-lg border border-gsc-border hover:border-gsc-gold transition-all duration-300 group"
+              >
+                <Image
+                  src={urlFor(image.image).width(600).url()}
+                  alt={image.image.alt || image.title}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center text-gsc-muted py-12">
+              No gallery images available yet. Add some in Sanity Studio!
             </div>
-          ))}
+          )}
         </div>
 
         <div className="text-center">

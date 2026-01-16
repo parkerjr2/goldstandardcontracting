@@ -1,19 +1,19 @@
-"use client";
-
-import Image from "next/image";
-import { useState } from "react";
+import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-import { GALLERY_IMAGES } from "@/lib/gallery";
+import { GalleryGrid } from "@/components/GalleryGrid";
+import { getGalleryImages } from "@/lib/sanity";
 
-export default function GalleryPage() {
-  const [activeFilter, setActiveFilter] = useState<string>("All");
+export const metadata: Metadata = {
+  title: "Project Gallery | Roofing & Remodeling Work",
+  description:
+    "View our completed roofing, siding, window, and remodeling projects throughout Norman and the OKC metro area.",
+};
 
-  const categories = ["All", "Roofing", "Exterior", "Remodeling"];
+export const revalidate = 3600; // ISR - revalidate every hour
 
-  const filteredImages = activeFilter === "All"
-    ? GALLERY_IMAGES
-    : GALLERY_IMAGES.filter((img) => img.category === activeFilter);
+export default async function GalleryPage() {
+  const images = await getGalleryImages();
 
   return (
     <>
@@ -29,48 +29,15 @@ export default function GalleryPage() {
       </Section>
 
       <Section className="bg-gsc-bg">
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveFilter(category)}
-              className={`px-6 py-2 rounded-full font-semibold transition-all duration-200 ${
-                activeFilter === category
-                  ? "bg-gsc-gold text-gsc-bg"
-                  : "bg-gsc-surface text-gsc-muted border border-gsc-border hover:border-gsc-gold"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
-        {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredImages.map((image, index) => (
-            <div
-              key={index}
-              className="group relative aspect-[4/3] overflow-hidden rounded-lg border border-gsc-border hover:border-gsc-gold transition-all duration-300"
-            >
-              <Image
-                src={image.url}
-                alt={image.alt}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gsc-bg/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <span className="inline-block px-3 py-1 bg-gsc-gold text-gsc-bg text-sm font-semibold rounded-full">
-                    {image.category}
-                  </span>
-                  <p className="mt-2 text-sm text-gsc-text">{image.alt}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {images.length > 0 ? (
+          <GalleryGrid images={images} />
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gsc-muted text-lg">
+              No gallery images available yet. Check back soon!
+            </p>
+          </div>
+        )}
       </Section>
 
       <Section className="bg-gsc-surface">
