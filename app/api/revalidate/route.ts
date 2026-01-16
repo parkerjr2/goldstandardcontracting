@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 async function handleRevalidation(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
-  const path = searchParams.get('path') || '/';
 
   // Validate secret
   if (secret !== process.env.REVALIDATION_SECRET) {
@@ -12,10 +11,31 @@ async function handleRevalidation(request: NextRequest) {
   }
 
   try {
-    await revalidatePath(path);
+    // Parse webhook body to determine content type
+    let contentType = 'unknown';
+    try {
+      const body = await request.json();
+      contentType = body._type || 'unknown';
+    } catch {
+      // If body parsing fails, just revalidate homepage
+    }
+
+    // Revalidate relevant paths based on content type
+    const pathsToRevalidate = new Set<string>(['/']); // Always revalidate homepage
+
+    if (contentType === 'galleryImage') {
+      pathsToRevalidate.add('/gallery');
+    }
+
+    // Revalidate all affected paths
+    await Promise.all(
+      Array.from(pathsToRevalidate).map(path => revalidatePath(path))
+    );
+
     return NextResponse.json({
       revalidated: true,
-      path,
+      paths: Array.from(pathsToRevalidate),
+      contentType,
       now: Date.now(),
     });
   } catch (err) {
