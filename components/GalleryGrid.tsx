@@ -19,7 +19,7 @@ export function GalleryGrid({ images }: GalleryGridProps) {
   const [activeFilter, setActiveFilter] = useState<string>("all");
 
   // Get unique categories from images
-  const categories = ["all", ...Array.from(new Set(images.map(img => img.category).filter(Boolean)))];
+  const categories: string[] = ["all", ...Array.from(new Set(images.map(img => img.category).filter(Boolean))) as string[]];
 
   const filteredImages = activeFilter === "all"
     ? images
@@ -29,7 +29,7 @@ export function GalleryGrid({ images }: GalleryGridProps) {
     <>
       {/* Filter Buttons */}
       <div className="flex flex-wrap justify-center gap-3 mb-12">
-        {categories.map((category) => (
+        {categories.map((category: string) => (
           <button
             key={category}
             onClick={() => setActiveFilter(category)}
