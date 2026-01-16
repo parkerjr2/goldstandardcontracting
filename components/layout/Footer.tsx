@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail } from "lucide-react";
 import { BUSINESS_INFO, CITIES, SERVICES, SOCIAL_LINKS } from "@/lib/constants";
 import { formatPhoneLink } from "@/lib/utils";
@@ -13,9 +14,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gsc-gold text-gsc-bg font-bold text-xl">
-                GS
+            <Link href="/" className="flex items-center space-x-2 mb-4">
+              <div className="relative w-12 h-12 flex-shrink-0">
+                <Image
+                  src="/logos/logo.png"
+                  alt="Gold Standard Contracting"
+                  fill
+                  className="object-contain"
+                />
               </div>
               <div>
                 <div className="text-gsc-text font-heading font-bold text-lg leading-tight">
@@ -23,7 +29,7 @@ export function Footer() {
                 </div>
                 <div className="text-gsc-muted text-xs">Contracting</div>
               </div>
-            </div>
+            </Link>
             <p className="text-gsc-muted mb-4 text-sm">
               Premium craftsmanship and clear communication — from concept to completion.
             </p>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { BUSINESS_INFO } from "@/lib/constants";
 import { formatPhoneLink } from "@/lib/utils";
@@ -41,9 +42,15 @@ export function Header() {
       <nav className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gsc-gold text-gsc-bg font-bold text-xl">
-              GS
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-12 h-12 flex-shrink-0">
+              <Image
+                src="/logos/logo.png"
+                alt="Gold Standard Contracting"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <div className="hidden sm:block">
               <div className="text-gsc-text font-heading font-bold text-lg leading-tight">
